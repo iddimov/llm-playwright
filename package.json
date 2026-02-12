@@ -27,5 +27,9 @@
     "csv-parse": "^6.1.0",
     "langchain": "^1.2.21",
     "mcp-use": "^1.17.0"
+  },
+  "overrides": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
   }
 }
