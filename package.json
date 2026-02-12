@@ -1,0 +1,31 @@
+{
+  "name": "llm-playwright",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test",
+    "planner": "npx tsx scripts/planner.ts",
+    "generator": "npx tsx scripts/generator.ts",
+    "healer": "npx tsx scripts/healer.ts",
+    "heal": "npx tsx scripts/healer.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@playwright/mcp": "^0.0.64",
+    "@playwright/test": "^1.58.2",
+    "@types/node": "^25.2.3",
+    "dotenv": "^17.2.4",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@langchain/openai": "^1.2.7",
+    "@modelcontextprotocol/server-filesystem": "^2026.1.14",
+    "csv-parse": "^6.1.0",
+    "langchain": "^1.2.21",
+    "mcp-use": "^1.17.0"
+  }
+}
