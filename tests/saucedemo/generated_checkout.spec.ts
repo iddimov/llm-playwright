@@ -4,9 +4,15 @@
 import { test, expect } from '../../fixtures/pages/pages.fixtures';
 
 test.describe('SauceDemo Checkout', () => {
-  test('Complete Checkout Flow', async ({ inventoryPage, cartPage }) => {
-    // Login is handled by seed/fixture
-    
+  test('Complete Checkout Flow', async ({ sauceLoginPage, inventoryPage, cartPage }) => {
+    // Login to application
+    await test.step('Login to application', async () => {
+      await sauceLoginPage.navigate();
+      // Use env vars or default
+      await sauceLoginPage.login(process.env.TEST_USER || 'standard_user', process.env.TEST_PASSWORD || 'secret_sauce');
+      await sauceLoginPage.verifyInventoryUrl();
+    });
+
     await test.step('Add "Sauce Labs Backpack" to cart', async () => {
       await inventoryPage.addItemToCart('backpack');
     });
@@ -16,27 +22,15 @@ test.describe('SauceDemo Checkout', () => {
     });
 
     await test.step('Click "Checkout" button', async () => {
-      await cartPage.clickCheckout();
+      await cartPage.checkout();
     });
 
-    await test.step('Fill "First Name" with "Test"', async () => {
-      await cartPage.fillFirstName('Test');
-    });
-
-    await test.step('Fill "Last Name" with "User"', async () => {
-      await cartPage.fillLastName('User');
-    });
-
-    await test.step('Fill "Zip/Postal Code" with "12345"', async () => {
-      await cartPage.fillZipCode('12345');
-    });
-
-    await test.step('Click "Continue"', async () => {
-      await cartPage.clickContinue();
+    await test.step('Fill checkout details', async () => {
+      await cartPage.fillCheckoutDetails('Test', 'User', '12345');
     });
 
     await test.step('Click "Finish"', async () => {
-      await cartPage.clickFinish();
+      await cartPage.finishCheckout();
     });
 
     await test.step('Verify that the complete header says "Thank you for your order!"', async () => {
