@@ -1,17 +1,11 @@
 // spec: specs/checkout_cases.md
 // seed: tests/saucedemo/seed.spec.ts
 
-import { test, expect } from '../../fixtures/pages/pages.fixtures';
+import { test, expect } from '../../fixtures/auth/auth.fixtures';
 
 test.describe('SauceDemo Checkout', () => {
-  test('Complete Checkout Flow', async ({ sauceLoginPage, inventoryPage, cartPage }) => {
-    // Login to application
-    await test.step('Login to application', async () => {
-      await sauceLoginPage.navigate();
-      // Use env vars or default
-      await sauceLoginPage.login(process.env.TEST_USER || 'standard_user', process.env.TEST_PASSWORD || 'secret_sauce');
-      await sauceLoginPage.verifyInventoryUrl();
-    });
+  test('Complete Checkout Flow', async ({ inventoryPage, cartPage }) => {
+    // Login handled by fixture
 
     await test.step('Add "Sauce Labs Backpack" to cart', async () => {
       await inventoryPage.addItemToCart('backpack');

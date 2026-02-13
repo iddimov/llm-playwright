@@ -1,10 +1,6 @@
 import { test, expect } from '../../fixtures/auth/auth.fixtures';
-import { InventoryPage } from '../../pages/saucedemo/InventoryPage';
-import { CartPage } from '../../pages/saucedemo/CartPage';
 
-test('E2E Checkout Flow', async ({ authenticatedPage }) => {
-    const inventoryPage = new InventoryPage(authenticatedPage);
-    const cartPage = new CartPage(authenticatedPage);
+test('E2E Checkout Flow', async ({ inventoryPage, cartPage }) => {
 
     // 1. Add items
     await inventoryPage.addItemToCart('backpack');

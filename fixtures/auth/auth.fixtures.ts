@@ -1,9 +1,13 @@
 import { test as base } from '@playwright/test';
 import { LoginPage } from '../../pages/saucedemo/LoginPage';
+import { InventoryPage } from '../../pages/saucedemo/InventoryPage';
+import { CartPage } from '../../pages/saucedemo/CartPage';
 
 // Define the custom fixture type
 type AuthFixtures = {
     authenticatedPage: import('@playwright/test').Page;
+    inventoryPage: InventoryPage;
+    cartPage: CartPage;
 };
 
 // Extend the base test
@@ -28,6 +32,12 @@ export const test = base.extend<AuthFixtures>({
 
         // Use the authenticated page
         await use(page);
+    },
+    inventoryPage: async ({ authenticatedPage }, use) => {
+        await use(new InventoryPage(authenticatedPage));
+    },
+    cartPage: async ({ authenticatedPage }, use) => {
+        await use(new CartPage(authenticatedPage));
     },
 });
 
