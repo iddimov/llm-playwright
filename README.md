@@ -1,7 +1,7 @@
 # LLM-Playwright Automation Framework
 
 A next-generation test automation framework that leverages Large Language Models (LLMs) and the Model Context Protocol (MCP) to plan, generate, and heal Playwright tests autonomously.
-[Read my Blog Post: Why I Stopped Writing Scripts and Started Architecting Agents]([https://ivandimov.dev/qas-new-frontier-trust-as-a-quality-metric](https://ivandimov.dev/the-death-of-the-flaky-test-why-i-stopped-writing-scripts-and-started-architecting-agents)
+[Read my Blog Post: The Death of the Flaky Test - Why I Stopped Writing Scripts and Started Architecting Agents](https://ivandimov.dev/the-death-of-the-flaky-test-why-i-stopped-writing-scripts-and-started-architecting-agents)
 ## 🚀 Project Overview
 
 The **LLM-Playwright** project demonstrates an advanced approach to end-to-end testing where AI agents collaborate to maintain test quality and coverage.
