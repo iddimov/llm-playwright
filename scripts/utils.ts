@@ -36,18 +36,33 @@ export async function createAgent(agentName: string, configPath: string) {
 
     const client = MCPClient.fromDict(config);
 
-    // Initialize LLM with DeepSeek
-    if (process.env.DEEPSEEK_API_KEY) {
-        process.env.OPENAI_API_KEY = process.env.DEEPSEEK_API_KEY;
-    }
+    // Initialize LLM based on provider
+    const provider = process.env.LLM_PROVIDER || 'deepseek';
+    let llm;
 
-    const llm = new ChatOpenAI({
-        modelName: 'deepseek-chat',
-        temperature: 0,
-        configuration: {
-            baseURL: 'https://api.deepseek.com',
+    if (provider === 'ollama') {
+        llm = new ChatOpenAI({
+            modelName: process.env.OLLAMA_MODEL || 'llama3',
+            temperature: 0,
+            configuration: {
+                baseURL: process.env.OLLAMA_BASE_URL || 'http://localhost:11434/v1',
+                apiKey: 'ollama', // Ollama doesn't need a real key but ChatOpenAI might require one
+            }
+        });
+    } else {
+        // Default to DeepSeek
+        if (process.env.DEEPSEEK_API_KEY) {
+            process.env.OPENAI_API_KEY = process.env.DEEPSEEK_API_KEY;
         }
-    });
+
+        llm = new ChatOpenAI({
+            modelName: 'deepseek-chat',
+            temperature: 0,
+            configuration: {
+                baseURL: 'https://api.deepseek.com',
+            }
+        });
+    }
 
     const agent = new MCPAgent({
         llm,

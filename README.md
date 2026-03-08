@@ -65,8 +65,9 @@ flowchart TD
 Ensure you have the following installed:
 - **Node.js** (v18 or higher)
 - **npm** (or pnpm/yarn)
+- **Ollama** (Optional, for local LLM execution)
 
-You also need an API key for the LLM provider (OpenAI or DeepSeek).
+You also need an API key for the LLM provider (OpenAI or DeepSeek), or a local Ollama instance.
 
 ---
 
@@ -88,9 +89,15 @@ You also need an API key for the LLM provider (OpenAI or DeepSeek).
 3.  **Configure Environment Variables:**
     Create a `.env` file in the root directory:
     ```ini
-    # LLM Provider (DeepSeek is default in utils.ts)
+    # LLM Provider Selection (deepseek or ollama)
+    LLM_PROVIDER=deepseek
+
+    # DeepSeek Configuration
     DEEPSEEK_API_KEY=your_deepseek_key
-    # OPENAI_API_KEY=your_openai_key # Optional if using OpenAI
+
+    # Ollama Configuration (if LLM_PROVIDER=ollama)
+    OLLAMA_BASE_URL=http://localhost:11434/v1
+    OLLAMA_MODEL=deepseek-r1:7b
 
     # Application Credentials (for SauceDemo)
     TEST_USER=standard_user
