@@ -1,20 +1,13 @@
 import { Page, expect } from '@playwright/test';
+import { CartPageLocators } from './Locators/CartPageLocators';
 
 export class CartPage {
     readonly page: Page;
-    private readonly locators = {
-        cartUrl: /.*cart.html/,
-        checkoutButton: '[data-test="checkout"]',
-        firstNameInput: '[data-test="firstName"]',
-        lastNameInput: '[data-test="lastName"]',
-        postalCodeInput: '[data-test="postalCode"]',
-        continueButton: '[data-test="continue"]',
-        finishButton: '[data-test="finish"]',
-        completeHeader: '.complete-header'
-    };
+    private readonly locators: CartPageLocators;
 
     constructor(page: Page) {
         this.page = page;
+        this.locators = new CartPageLocators(page);
     }
 
     async verifyCartUrl() {
@@ -22,21 +15,21 @@ export class CartPage {
     }
 
     async checkout() {
-        await this.page.locator(this.locators.checkoutButton).click();
+        await this.locators.checkoutButton.click();
     }
 
     async fillCheckoutDetails(firstName: string, lastName: string, postalCode: string) {
-        await this.page.locator(this.locators.firstNameInput).fill(firstName);
-        await this.page.locator(this.locators.lastNameInput).fill(lastName);
-        await this.page.locator(this.locators.postalCodeInput).fill(postalCode);
-        await this.page.locator(this.locators.continueButton).click();
+        await this.locators.firstNameInput.fill(firstName);
+        await this.locators.lastNameInput.fill(lastName);
+        await this.locators.postalCodeInput.fill(postalCode);
+        await this.locators.continueButton.click();
     }
 
     async finishCheckout() {
-        await this.page.locator(this.locators.finishButton).click();
+        await this.locators.finishButton.click();
     }
 
     async getCompleteHeaderText() {
-        return await this.page.locator(this.locators.completeHeader).innerText();
+        return await this.locators.completeHeader.innerText();
     }
 }

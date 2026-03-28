@@ -1,19 +1,18 @@
 import { Page, expect } from '@playwright/test';
+import { DashboardPageLocators } from './Locators/DashboardPageLocators';
 
 export class DashboardPage {
     readonly page: Page;
-    private readonly locators = {
-        pimLink: 'a:has-text("PIM"), span:has-text("PIM")',
-        pimUrl: /.*viewPimModule|.*viewEmployeeList|.*pim\/viewEmployeeList/
-    };
+    private readonly locators: DashboardPageLocators;
 
     constructor(page: Page) {
         this.page = page;
+        this.locators = new DashboardPageLocators(page);
     }
 
     async navigateToPIM() {
         // Wait for the PIM link to be visible and click it
-        await this.page.locator(this.locators.pimLink).first().click({ timeout: 10000 });
+        await this.locators.pimLink.first().click({ timeout: 10000 });
         
         // Wait for navigation to PIM page with a longer timeout
         // Also check for common PIM page elements as fallback
@@ -23,7 +22,7 @@ export class DashboardPage {
             // If URL doesn't match, wait for PIM page to load by checking for common elements
             await this.page.waitForLoadState('domcontentloaded');
             // Check for PIM header or add button as confirmation
-            await this.page.waitForSelector('button:has-text("Add"), h6:has-text("PIM")', { timeout: 5000 });
+            await expect(this.page.getByRole('button', { name: 'Add' }).or(this.page.getByRole('heading', { name: 'PIM', level: 6 }))).toBeVisible({ timeout: 5000 });
         }
         
         // Wait for the page to be fully loaded

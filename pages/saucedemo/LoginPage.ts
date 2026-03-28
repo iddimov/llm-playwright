@@ -1,17 +1,13 @@
 import { Page, expect } from '@playwright/test';
+import { LoginPageLocators } from './Locators/LoginPageLocators';
 
 export class LoginPage {
     readonly page: Page;
-    private readonly locators = {
-        usernameInput: '[data-test="username"]',
-        passwordInput: '[data-test="password"]',
-        loginButton: '[data-test="login-button"]',
-        errorMessage: '[data-test="error"]',
-        inventoryUrl: /.*inventory.html/
-    };
+    private readonly locators: LoginPageLocators;
 
     constructor(page: Page) {
         this.page = page;
+        this.locators = new LoginPageLocators(page);
     }
 
     async navigate() {
@@ -19,13 +15,13 @@ export class LoginPage {
     }
 
     async login(username: string, password: string) {
-        await this.page.locator(this.locators.usernameInput).fill(username);
-        await this.page.locator(this.locators.passwordInput).fill(password);
-        await this.page.locator(this.locators.loginButton).click();
+        await this.locators.usernameInput.fill(username);
+        await this.locators.passwordInput.fill(password);
+        await this.locators.loginButton.click();
     }
 
     async getErrorMessage() {
-        return this.page.locator(this.locators.errorMessage);
+        return this.locators.errorMessage;
     }
 
     async verifyInventoryUrl() {
